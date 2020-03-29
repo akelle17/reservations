@@ -7,6 +7,7 @@ import Home from './components/pages/Home';
 import Login from './components/auth/Login';
 import Profile from './components/auth/Profile';
 import Admin from './components/pages/Admin';
+import Reservations from './components/pages/Reservations';
 
 import config from './config';
 
@@ -26,6 +27,7 @@ const HasAccessToRouter = () => {
       <Route path="/login" component={Login} />
       <SecureRoute path="/profile" component={Profile} />
       <SecureRoute exact path="/admin" component={Admin} />
+      <SecureRoute exact path="/reservations" component={Reservations} />
     </Security>
   )
 }
