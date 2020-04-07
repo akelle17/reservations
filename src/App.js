@@ -9,6 +9,8 @@ import Profile from './components/auth/Profile';
 import Admin from './components/pages/Admin';
 import Reservations from './components/pages/Reservations';
 
+import { GlobalProvider } from './context/GlobalState';
+
 import config from './config';
 
 const HasAccessToRouter = () => {
@@ -19,16 +21,18 @@ const HasAccessToRouter = () => {
   }
 
   return (
-    <Security {...config.oidc}
-      onAuthRequired={customAuthHandler}>
-      <Navbar></Navbar>
-      <Route exact path="/" component={Home} />
-      <Route path="/implicit/callback" component={LoginCallback} />
-      <Route path="/login" component={Login} />
-      <SecureRoute path="/profile" component={Profile} />
-      <SecureRoute exact path="/admin" component={Admin} />
-      <SecureRoute exact path="/reservations" component={Reservations} />
-    </Security>
+    <GlobalProvider> 
+      <Security {...config.oidc}
+        onAuthRequired={customAuthHandler}>
+        <Navbar></Navbar>
+        <Route exact path="/" component={Home} />
+        <Route path="/implicit/callback" component={LoginCallback} />
+        <Route path="/login" component={Login} />
+        <SecureRoute path="/profile" component={Profile} />
+        <SecureRoute exact path="/admin" component={Admin} />
+        <SecureRoute exact path="/reservations" component={Reservations} />
+      </Security>
+    </GlobalProvider>
   )
 }
 

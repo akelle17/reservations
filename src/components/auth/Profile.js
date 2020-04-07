@@ -28,10 +28,7 @@ const Profile = () => {
         <div>
             <div>
                 <Header as="h1">
-                    <Icon name="drivers license outline" />
-                    {' '}
                     My User Profile (ID Token Claims)
-                    {' '}
                 </Header>
                 <p>
                     Below is the information from your ID token which was obtained during the &nbsp;

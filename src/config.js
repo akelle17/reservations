@@ -14,6 +14,6 @@ export default {
     disableHttpsCheck: OKTA_TESTING_DISABLEHTTPSCHECK,
   },
   resourceServer: {
-    reservationsUrl: 'http://localhost:8000/api/reservations',
+    reservationsUrl: 'http://localhost:8000/api/v1/reservations',
   },
 };

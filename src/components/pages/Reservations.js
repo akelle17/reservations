@@ -2,6 +2,8 @@ import { useOktaAuth } from '@okta/okta-react';
 import React, { useState, useEffect } from 'react';
 import { Header, Icon, Table } from 'semantic-ui-react';
 
+import AddReservation from '../AddReservation';
+
 import config from '../../config';
 
 const Reservations = () => {
@@ -22,28 +24,30 @@ const Reservations = () => {
                 }
                 return response.json();
             })
-            .then((data) => {
+            .then((response) => {
                 let index = 0;
-                const formattedReservations = data.reservations.map((reservation) => {
-                    const date = new Date(reservation.date);
-                    const day = date.toLocaleDateString();
-                    const time = date.toLocaleTimeString();
-                    index += 1;
-                    return {
-                        date: `${day} ${time}`,
-                        text: reservation.text,
-                        id: `reservation-${index}`,
-                    };
-                });
-                setReservations(formattedReservations);
-                //set failed to false.
+                if (response.count > 0) {
+                    const formattedReservations = response.data.map((reservation) => {
+                        const date = new Date(reservation.date);
+                        const day = date.toLocaleDateString();
+                        const time = date.toLocaleTimeString();
+                        index += 1;
+                        return {
+                            date: `${day} ${time}`,
+                            text: reservation.text,
+                            id: `reservation-${index}`,
+                        };
+                    });
+                    setReservations(formattedReservations);
+                    //set failed to false.
+                }
             })
             .catch((err) => {
                 //set failed 
                 console.log(err);
             });
         }
-    });
+    }, []);
 
     if (!reservations) {
         return (
@@ -53,7 +57,8 @@ const Reservations = () => {
 
     return (
         <div>
-             <Header as="h1">
+            <AddReservation />
+            <Header as="h1">
                 <Icon name="mail outline" />
                 My Reservations
             </Header>
