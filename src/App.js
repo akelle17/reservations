@@ -11,7 +11,7 @@ import Reservations from './components/pages/Reservations';
 
 import { GlobalProvider } from './context/GlobalState';
 
-import config from './config';
+import config from './config/config';
 
 const HasAccessToRouter = () => {
   const history = useHistory();

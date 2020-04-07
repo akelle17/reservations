@@ -4,7 +4,7 @@ import { Header, Icon, Table } from 'semantic-ui-react';
 
 import AddReservation from '../AddReservation';
 
-import config from '../../config';
+import config from '../../config/config';
 
 const Reservations = () => {
     const { authState } = useOktaAuth();
