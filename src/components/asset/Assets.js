@@ -1,19 +1,16 @@
 import { useOktaAuth } from '@okta/okta-react';
 import React, { useState, useEffect } from 'react';
 
-
-import AddReservation from '../AddReservation';
-
 import config from '../../config/config';
 
-const Reservations = () => {
+const Assets = () => {
     const { authState } = useOktaAuth();
-    const [reservations, setReservations] = useState(null);
+    const [assets, setAssets] = useState(null);
 
     useEffect(() => {
         if (authState.isAuthenticated) {
             const { accessToken } = authState;
-            fetch(config.resourceServer.reservationsUrl, {
+            fetch(config.resourceServer.assetsUrl, {
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
                 },
@@ -27,18 +24,15 @@ const Reservations = () => {
             .then((response) => {
                 let index = 0;
                 if (response.count > 0) {
-                    const formattedReservations = response.data.map((reservation) => {
-                        const date = new Date(reservation.date);
-                        const day = date.toLocaleDateString();
-                        const time = date.toLocaleTimeString();
+                    const formattedAssets = response.data.map((asset) => {
                         index += 1;
                         return {
-                            date: `${day} ${time}`,
-                            text: reservation.text,
+                            name: asset.name,
+                            type: asset.type,
                             id: `reservation-${index}`,
                         };
                     });
-                    setReservations(formattedReservations);
+                    setAssets(formattedAssets);
                     //set failed to false.
                 }
             })
@@ -49,33 +43,30 @@ const Reservations = () => {
         }
     }, []);
 
-    if (!reservations) {
+    if (!assets) {
         return (
-            <div>Loading reservataions...</div>
+            <div>Loading assets...</div>
         )
     }
 
     return (
         <div>
             <div>
-                <AddReservation />
-            </div>
-            <div>
                 <h1>
-                    My Reservations
+                    Assets
                 </h1>
                 <table>
                     <thead>
                         <tr>
-                            <th>Date</th>
-                            <th>Reservation</th>
+                            <th>Name</th>
+                            <th>Type</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {reservations.map((reservation) => (
-                            <tr id={reservation.id} key={reservation.id}>
-                                <td>{reservation.date}</td>
-                                <td>{reservation.text}</td>
+                        {assets.map((asset) => (
+                            <tr id={asset.id} key={asset.id}>
+                                <td>{asset.name}</td>
+                                <td>{asset.type}</td>
                             </tr>
                         ))}
                     </tbody>
@@ -85,4 +76,4 @@ const Reservations = () => {
     );
 };
 
-export default Reservations;
+export default Assets;

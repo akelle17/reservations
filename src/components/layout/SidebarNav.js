@@ -28,6 +28,11 @@ class SidebarNav extends React.Component {
                 <Link to="/reservations" />
             </Menu.Item>
             <Menu.Item key="3">
+                <AppstoreOutlined />
+                <span>Assets</span>
+                <Link to="/assets" />
+            </Menu.Item>
+            <Menu.Item key="4">
                 <SettingOutlined />
                 <span>Admin</span>
                 <Link to="/admin" />
