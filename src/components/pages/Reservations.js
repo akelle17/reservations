@@ -1,6 +1,6 @@
 import { useOktaAuth } from '@okta/okta-react';
 import React, { useState, useEffect } from 'react';
-import { Header, Icon, Table } from 'semantic-ui-react';
+
 
 import AddReservation from '../AddReservation';
 
@@ -57,27 +57,30 @@ const Reservations = () => {
 
     return (
         <div>
-            <AddReservation />
-            <Header as="h1">
-                <Icon name="mail outline" />
-                My Reservations
-            </Header>
-            <Table>
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Reservation</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {reservations.map((reservation) => (
-                        <tr id={reservation.id} key={reservation.id}>
-                            <td>{reservation.date}</td>
-                            <td>{reservation.text}</td>
+            <div>
+                <AddReservation />
+            </div>
+            <div>
+                <h1>
+                    My Reservations
+                </h1>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Reservation</th>
                         </tr>
-                    ))}
-                </tbody>
-            </Table>
+                    </thead>
+                    <tbody>
+                        {reservations.map((reservation) => (
+                            <tr id={reservation.id} key={reservation.id}>
+                                <td>{reservation.date}</td>
+                                <td>{reservation.text}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
         </div>
     );
 };
