@@ -3,7 +3,18 @@ export default (state, action) => {
         case 'ADD_RESERVATION':
             return {
                 ...state,
-                reservations: state.reservations.filter(reservation => reservation.id !== action.payload)
+                reservations: [action.payload, ...state.reservations]
+            }
+        case 'GET_ASSETS':
+            return {
+                ...state,
+                loading: false,
+                assets: action.payload
+            }
+        case 'GET_ASSETS_ERROR':
+            return {
+                ...state,
+                error: action.payload
             }
         default:
             return state;
