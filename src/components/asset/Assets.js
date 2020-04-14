@@ -1,47 +1,16 @@
 import { useOktaAuth } from '@okta/okta-react';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+
+import { GlobalContext } from '../../context/GlobalState';
 
 import config from '../../config/config';
 
 const Assets = () => {
-    const { authState } = useOktaAuth();
-    const [assets, setAssets] = useState(null);
+    const { assets, getAssets } = useContext(GlobalContext);
 
     useEffect(() => {
-        if (authState.isAuthenticated) {
-            const { accessToken } = authState;
-            fetch(config.resourceServer.assetsUrl, {
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                },
-            })
-            .then((response) => {
-                if (!response.ok) {
-                    return Promise.reject();
-                }
-                return response.json();
-            })
-            .then((response) => {
-                let index = 0;
-                if (response.count > 0) {
-                    const formattedAssets = response.data.map((asset) => {
-                        index += 1;
-                        return {
-                            name: asset.name,
-                            type: asset.type,
-                            id: `reservation-${index}`,
-                        };
-                    });
-                    setAssets(formattedAssets);
-                    //set failed to false.
-                }
-            })
-            .catch((err) => {
-                //set failed 
-                console.log(err);
-            });
-        }
-    }, []);
+      getAssets();
+    }, [])
 
     if (!assets) {
         return (

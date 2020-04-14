@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, useHistory } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { Row, Col, Layout } from 'antd';
 import './App.css';
 
@@ -15,46 +15,35 @@ import SidebarNav from './components/layout/SidebarNav';
 
 import { GlobalProvider } from './context/GlobalState';
 
-import config from './config/config';
-
 const HasAccessToRouter = () => {
-  const history = useHistory();
-
-  const customAuthHandler = () => {
-    history.push('/login');
-  }
-
   return (
-    <GlobalProvider> 
-      <Security {...config.oidc}
-        onAuthRequired={customAuthHandler}>
-          <header>
-            <Row>
-              <Col span={6}>
-                <h1>Reservations</h1>
-              </Col>
-              <Col span={18}>
-
-              </Col>
-            </Row>
-          </header>
+      <GlobalProvider> 
+        <header>
           <Row>
             <Col span={6}>
-              <SidebarNav></SidebarNav>
+              <h1>Reservations</h1>
             </Col>
             <Col span={18}>
-              <div className="ui text container">
-                <Route exact path="/" component={Home} />
-                <Route path="/implicit/callback" component={LoginCallback} />
-                <Route path="/login" component={Login} />
-                <SecureRoute path="/profile" component={Profile} />
-                <SecureRoute exact path="/admin" component={Admin} />
-                <SecureRoute exact path="/assets" component={Assets} />
-                <SecureRoute exact path="/reservations" component={Reservations} />
-              </div>
+
             </Col>
           </Row>
-      </Security>
+        </header>
+        <Row>
+          <Col span={6}>
+            <SidebarNav></SidebarNav>
+          </Col>
+          <Col span={18}>
+            <div className="ui text container">
+              <Route exact path="/" component={Home} />
+              <Route path="/implicit/callback" component={LoginCallback} />
+              <Route path="/login" component={Login} />
+              <SecureRoute path="/profile" component={Profile} />
+              <SecureRoute exact path="/admin" component={Admin} />
+              <SecureRoute exact path="/assets" component={Assets} />
+              <SecureRoute exact path="/reservations" component={Reservations} />
+            </div>
+          </Col>
+        </Row>
     </GlobalProvider>
   )
 }

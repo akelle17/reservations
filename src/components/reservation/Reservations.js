@@ -1,6 +1,8 @@
 import { useOktaAuth } from '@okta/okta-react';
 import React, { useState, useEffect } from 'react';
 
+import { GlobalState } from '../../context/GlobalState';
+ 
 import AddReservation from './AddReservation';
 
 import config from '../../config/config';
