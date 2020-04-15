@@ -1,9 +1,6 @@
-import { useOktaAuth } from '@okta/okta-react';
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useEffect, useContext } from 'react';
 
 import { GlobalContext } from '../../context/GlobalState';
-
-import config from '../../config/config';
 
 const Assets = () => {
     const { assets, getAssets } = useContext(GlobalContext);
@@ -33,7 +30,7 @@ const Assets = () => {
                     </thead>
                     <tbody>
                         {assets.map((asset) => (
-                            <tr id={asset.id} key={asset.id}>
+                            <tr id={asset._id} key={asset._id}>
                                 <td>{asset.name}</td>
                                 <td>{asset.type}</td>
                             </tr>

@@ -2,11 +2,14 @@ import React, { useEffect } from 'react';
 import * as OktaSignIn from '@okta/okta-signin-widget';
 import '@okta/okta-signin-widget/dist/css/okta-sign-in.min.css';
 
-import config from '../../config/config';
-
 const Login = () => {
   useEffect(() => {
-    const { pkce, issuer, clientId, redirectUri, scopes } = config.oidc;
+    const issuer = `${process.env.REACT_APP_ISSUER}`;
+    const redirectUri = `${window.location.origin}/implicit/callback`;
+    const clientId = process.env.REACT_APP_CLIENT_ID;
+    const pkce = true;
+    const scopes = ['openid', 'profile', 'email']
+
     const widget = new OktaSignIn({
       /**
        * Note: when using the Sign-In Widget for an OIDC flow, it still
@@ -19,7 +22,7 @@ const Login = () => {
       logo: '/react.svg',
       i18n: {
         en: {
-          'primaryauth.title': 'Sign in to React & Company',
+          'primaryauth.title': 'Sign in to Reservations',
         },
       },
       authParams: {

@@ -3,31 +3,11 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { BrowserRouter, useHistory } from 'react-router-dom';
-import { Security } from '@okta/okta-react';
-
-const oktaConfig = {
-  issuer: `${process.env.REACT_APP_ISSUER}/oauth2/default`,
-  redirect_uri: `${window.location.origin}/implicit/callback`,
-  client_id: process.env.REACT_APP_CLIENT_ID,
-};
-
-// const history = useHistory();
-
-// const customAuthHandler = () => {
-//   history.push('/login');
-// }
-
-// onAuthRequired={customAuthHandler}>
 
 ReactDOM.render(
-  // <React.StrictMode>
-  <BrowserRouter>
-    <Security {...oktaConfig}>
-      <App />
-    </Security>
-  </BrowserRouter>,
-  // </React.StrictMode>
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
   document.getElementById('root')
 );
 

@@ -1,6 +1,6 @@
 import React from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import { Row, Col, Layout } from 'antd';
+import { BrowserRouter as Router, Route, useHistory } from 'react-router-dom';
+import { Row, Col } from 'antd';
 import './App.css';
 
 import { Security, SecureRoute, LoginCallback } from '@okta/okta-react';
@@ -15,8 +15,22 @@ import SidebarNav from './components/layout/SidebarNav';
 
 import { GlobalProvider } from './context/GlobalState';
 
+const oktaConfig = {
+  issuer: `${process.env.REACT_APP_ISSUER}`,
+  redirect_uri: `${window.location.origin}/implicit/callback`,
+  client_id: process.env.REACT_APP_CLIENT_ID,
+};
+
 const HasAccessToRouter = () => {
+  const history = useHistory();
+
+  const customAuthHandler = () => {
+    history.push('/login');
+  }
+
   return (
+    <Security {...oktaConfig} 
+              onAuthRequired={customAuthHandler}>
       <GlobalProvider> 
         <header>
           <Row>
@@ -44,16 +58,15 @@ const HasAccessToRouter = () => {
             </div>
           </Col>
         </Row>
-    </GlobalProvider>
+      </GlobalProvider>
+    </Security>
   )
 }
 
 const App = () => (
-  <div>
-    <Router>
-      <HasAccessToRouter />
-    </Router>
-  </div>
+  <Router>
+    <HasAccessToRouter />
+  </Router>
 );
 
 export default App;
