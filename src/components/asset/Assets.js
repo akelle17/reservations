@@ -1,4 +1,5 @@
 import React, { useEffect, useContext } from 'react';
+import { Table } from 'antd';
 
 import { GlobalContext } from '../../context/GlobalState';
 
@@ -15,30 +16,24 @@ const Assets = () => {
         )
     }
 
+    const columns = [
+        {
+          title: 'Name',
+          dataIndex: 'name',
+          key: 'name',
+        },
+        {
+          title: 'Type',
+          dataIndex: 'type',
+          key: 'type',
+        }
+    ];
+
     return (
-        <div>
-            <div>
-                <h1>
-                    Assets
-                </h1>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Type</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {assets.map((asset) => (
-                            <tr id={asset._id} key={asset._id}>
-                                <td>{asset.name}</td>
-                                <td>{asset.type}</td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
-        </div>
+        <>
+            <h1>Assets</h1>
+            <Table dataSource={assets} columns={columns} />
+        </>
     );
 };
 

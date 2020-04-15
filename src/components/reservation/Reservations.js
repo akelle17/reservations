@@ -1,5 +1,6 @@
 import { useOktaAuth } from '@okta/okta-react';
 import React, { useState, useEffect } from 'react';
+import { Table } from 'antd';
 
 import { GlobalState } from '../../context/GlobalState';
  
@@ -10,6 +11,19 @@ import config from '../../config/config';
 const Reservations = () => {
     const { authState } = useOktaAuth();
     const [reservations, setReservations] = useState(null);
+
+    const columns = [
+        {
+          title: 'Text',
+          dataIndex: 'text',
+          key: 'text',
+        },
+        {
+          title: 'Date',
+          dataIndex: 'date',
+          key: 'date',
+        }
+    ];
 
     useEffect(() => {
         if (authState.isAuthenticated) {
@@ -57,32 +71,11 @@ const Reservations = () => {
     }
 
     return (
-        <div>
-            <div>
-                <AddReservation />
-            </div>
-            <div>
-                <h1>
-                    My Reservations
-                </h1>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Reservation</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {reservations.map((reservation) => (
-                            <tr id={reservation.id} key={reservation.id}>
-                                <td>{reservation.date}</td>
-                                <td>{reservation.text}</td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
-        </div>
+        <>
+            <h1>Reservations</h1>
+            <Table dataSource={reservations} columns={columns} />
+            <AddReservation />
+        </>
     );
 };
 

@@ -43,11 +43,11 @@ const HasAccessToRouter = () => {
           </Row>
         </header>
         <Row>
-          <Col span={6}>
+          <Col span={4}>
             <SidebarNav></SidebarNav>
           </Col>
-          <Col span={18}>
-            <div className="ui text container">
+          <Col span={20}>
+            <div className="main-container">
               <Route exact path="/" component={Home} />
               <Route path="/implicit/callback" component={LoginCallback} />
               <Route path="/login" component={Login} />
