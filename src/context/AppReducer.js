@@ -5,13 +5,18 @@ export default (state, action) => {
                 ...state,
                 reservations: [action.payload, ...state.reservations]
             }
+        case 'ADD_ASSET':
+            return {
+                ...state,
+                assets: [action.payload, ...state.assets]
+            }
         case 'GET_ASSETS':
             return {
                 ...state,
                 loading: false,
                 assets: action.payload
             }
-        case 'GET_ASSETS_ERROR':
+        case 'ASSET_ERROR':
             return {
                 ...state,
                 error: action.payload

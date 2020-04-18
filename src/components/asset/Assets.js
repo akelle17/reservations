@@ -5,11 +5,12 @@ import AddAssetModalForm from './AddAsset';
 import { GlobalContext } from '../../context/GlobalState';
 
 const Assets = () => {
-    const { assets, getAssets } = useContext(GlobalContext);
+    const { assets, addAsset, getAssets } = useContext(GlobalContext);
     const [visible, setVisible] = useState(false);
 
     const onCreate = values => {
       setVisible(false);
+      addAsset(values);
       console.log(values);
     };
 

@@ -3,6 +3,7 @@ import { useOktaAuth } from '@okta/okta-react';
 import axios from 'axios';
 
 import AppReducer from './AppReducer';
+import AddAssetModalForm from '../components/asset/AddAsset';
 
 const initialState = {
     reservations: [],
@@ -18,31 +19,63 @@ export const GlobalProvider = ({ children }) => {
     const { authState } = useOktaAuth();
 
     async function getAssets() {
-        try {
-            if (authState.isAuthenticated) {
-              const { accessToken } = authState;
-              
-              const config = {
-                headers: { Authorization: `Bearer ${accessToken}` }
-              }
-
-              const res = await axios.get('http://localhost:8000/api/v1/assets', config);
-
-              dispatch({
-                  type: 'GET_ASSETS',
-                  payload: res.data.data
-              });
-            } else {
-              // send unauthorized
-            }
+      try {
+        if (authState.isAuthenticated) {
+          const { accessToken } = authState;
             
-        } catch (err) {
-            console.log(err)
-            dispatch({
-                type: 'GET_ASSETS_ERROR',
-                payload: err.response.data.error
-            });
+          const config = {
+            headers: { Authorization: `Bearer ${accessToken}` }
+          }
+
+          const res = await axios.get('http://localhost:8000/api/v1/assets', config);
+
+          dispatch({
+              type: 'GET_ASSETS',
+              payload: res.data.data
+          });
+        } else {
+          // send unauthorized
         }
+        
+      } catch (err) {
+        console.log(err)
+        dispatch({
+            type: 'ASSET_ERROR',
+            payload: err.response.data.error
+        });
+      }
+    }
+
+    async function addAsset(asset) {
+      try {
+        if (authState.isAuthenticated) {
+          const { accessToken } = authState;
+            
+          const config = {
+              headers: { Authorization: `Bearer ${accessToken}` }
+          }
+
+          const res = await axios
+                              .post(
+                                'http://localhost:8000/api/v1/assets', 
+                                asset,
+                                config);
+
+          dispatch({
+              type: 'ADD_ASSET',
+              payload: res.data.data
+          });
+        } else {
+          // send unauthorized
+        }
+            
+      } catch (err) {
+          console.log(err)
+          dispatch({
+              type: 'ASSET_ERROR',
+              payload: err.response.data.error
+          });
+      }
     }
 
     return (<GlobalContext.Provider value={{
@@ -51,6 +84,7 @@ export const GlobalProvider = ({ children }) => {
         reservations: state.reservations,
         assets: state.assets,
         getAssets,
+        addAsset
     }}>
         {children}
     </GlobalContext.Provider>);
