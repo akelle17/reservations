@@ -10,6 +10,7 @@ import Login from './components/auth/Login';
 import Profile from './components/auth/Profile';
 import Admin from './components/admin/Admin';
 import Assets from './components/asset/Assets';
+import AssetDetails from './components/asset/AssetDetails';
 import Reservations from './components/reservation/Reservations';
 import SidebarNav from './components/layout/SidebarNav';
 
@@ -42,7 +43,7 @@ const HasAccessToRouter = () => {
             </Col>
           </Row>
         </header>
-        <Row>
+        <Row gutter={16}>
           <Col span={4}>
             <SidebarNav></SidebarNav>
           </Col>
@@ -54,6 +55,7 @@ const HasAccessToRouter = () => {
               <SecureRoute path="/profile" component={Profile} />
               <SecureRoute exact path="/admin" component={Admin} />
               <SecureRoute exact path="/assets" component={Assets} />
+              <SecureRoute exact path="/assets/detail/:id" component={AssetDetails} />
               <SecureRoute exact path="/reservations" component={Reservations} />
             </div>
           </Col>

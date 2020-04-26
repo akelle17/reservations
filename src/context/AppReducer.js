@@ -10,11 +10,23 @@ export default (state, action) => {
                 ...state,
                 assets: [action.payload, ...state.assets]
             }
+        case 'GET_ASSET':
+            return {
+                ...state,
+                loading: false,
+                asset: action.payload
+            }
         case 'GET_ASSETS':
             return {
                 ...state,
                 loading: false,
                 assets: action.payload
+            }
+        case 'DELETE_ASSET':
+            return {
+                ...state,
+                loading: false,
+                asset: null
             }
         case 'ASSET_ERROR':
             return {

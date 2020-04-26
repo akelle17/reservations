@@ -8,6 +8,7 @@ import AddAssetModalForm from '../components/asset/AddAsset';
 const initialState = {
     reservations: [],
     assets: [],
+    asset: null,
     error: null,
     loading: true
 }
@@ -46,6 +47,34 @@ export const GlobalProvider = ({ children }) => {
       }
     }
 
+
+    async function getAsset(id) {
+      try {
+        if (authState.isAuthenticated) {
+          const { accessToken } = authState;
+            
+          const config = {
+            headers: { Authorization: `Bearer ${accessToken}` }
+          }
+
+          const res = await axios.get(`http://localhost:8000/api/v1/assets/${id}`, config);
+
+          dispatch({
+              type: 'GET_ASSET',
+              payload: res.data.data
+          });
+        } else {
+          // send unauthorized
+        }
+        
+      } catch (err) {
+        dispatch({
+            type: 'ASSET_ERROR',
+            payload: err.response.data.error
+        });
+      }
+    }
+
     async function addAsset(asset) {
       try {
         if (authState.isAuthenticated) {
@@ -70,7 +99,36 @@ export const GlobalProvider = ({ children }) => {
         }
             
       } catch (err) {
-          console.log(err)
+          dispatch({
+              type: 'ASSET_ERROR',
+              payload: err.response.data.error
+          });
+      }
+    }
+
+    async function deleteAsset(id) {
+      try {
+        if (authState.isAuthenticated) {
+          const { accessToken } = authState;
+            
+          const config = {
+              headers: { Authorization: `Bearer ${accessToken}` }
+          }
+
+          const res = await axios
+                              .delete(
+                                `http://localhost:8000/api/v1/assets/${id}`,
+                                config);
+
+          dispatch({
+              type: 'DELETE_ASSET',
+              payload: res.data.data
+          });
+        } else {
+          // send unauthorized
+        }
+            
+      } catch (err) {
           dispatch({
               type: 'ASSET_ERROR',
               payload: err.response.data.error
@@ -83,8 +141,11 @@ export const GlobalProvider = ({ children }) => {
         loading: state.loading,
         reservations: state.reservations,
         assets: state.assets,
+        asset: state.asset,
+        getAsset,
         getAssets,
-        addAsset
+        addAsset,
+        deleteAsset
     }}>
         {children}
     </GlobalContext.Provider>);
